@@ -12,9 +12,12 @@ import lombok.RequiredArgsConstructor;
 
 import com.example.orderservice.dto.OrderLineItemsDto;
 import com.example.orderservice.dto.OrderRequest;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OrderService {
 	private final OrderRepository orderRepository;
 	
