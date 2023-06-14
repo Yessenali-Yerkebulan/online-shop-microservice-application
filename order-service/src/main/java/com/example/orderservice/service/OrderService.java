@@ -6,11 +6,18 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import com.example.orderservice.model.Order;
 import com.example.orderservice.model.OrderLineItems;
+import com.example.orderservice.repository.OrderRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import com.example.orderservice.dto.OrderLineItemsDto;
 import com.example.orderservice.dto.OrderRequest;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
+	private final OrderRepository orderRepository;
+	
 	public void placeOrder(OrderRequest orderRequest) {
 		Order order = new Order();
 		order.setOrderNumber(UUID.randomUUID().toString());
@@ -19,6 +26,7 @@ public class OrderService {
 			.map(this::mapToDto).toList();
 		
 		order.setOrderLineItemsList(orderLineItems);
+		orderRepository.save(order);
 	}
 	
 	private OrderLineItems mapToDto(OrderLineItemsDto orderLineItemsDto) {
